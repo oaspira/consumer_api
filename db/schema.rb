@@ -11,14 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_10_10_150045) do
-  create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.string "product_id"
     t.string "product_name"
     t.string "shop_name"
     t.integer "product_category_id"
     t.string "country"
     t.string "brand"
-    t.decimal "price", precision: 10
+    t.decimal "price", precision: 18
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

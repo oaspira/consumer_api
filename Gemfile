@@ -5,9 +5,14 @@ gem "mysql2", "~> 0.5"
 gem "puma", ">= 5.0"
 
 gem 'mongoid', '~> 8.0'
+gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
 gem 'sidekiq'
 gem 'sinatra'
 gem "redis", "~> 4.0"
+gem 'rack'
+gem 'rack-cors', require: 'rack/cors'
+gem 'activerecord-import'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
