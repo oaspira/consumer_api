@@ -9,7 +9,7 @@ gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
 gem 'sidekiq'
 gem 'sinatra'
-gem "redis", "~> 4.0"
+gem "redis", "~> 5.3"
 gem 'rack'
 gem 'rack-cors', require: 'rack/cors'
 gem 'activerecord-import'
