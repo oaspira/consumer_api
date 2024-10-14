@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :products, only: [:index] do
-    collection { post :upload }
+    collection do
+      post :upload
+    end
   end
 
   # TODO, Remove this section after configure session control

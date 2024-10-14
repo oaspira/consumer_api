@@ -13,6 +13,7 @@ gem "redis", "~> 4.0"
 gem 'rack'
 gem 'rack-cors', require: 'rack/cors'
 gem 'activerecord-import'
+gem 'will_paginate', '~> 3.3'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

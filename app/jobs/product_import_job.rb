@@ -1,7 +1,7 @@
 class ProductImportJob < ApplicationJob
   queue_as :default
 
-  def perform(file_path)
+  def perform(file_path, job_id)
     begin
       data = JSON.parse(File.read(file_path).force_encoding("ISO-8859-1").encode("UTF-8", invalid: :replace, undef: :replace, replace: ""))
     rescue JSON::ParserError => e
@@ -12,35 +12,38 @@ class ProductImportJob < ApplicationJob
       return
     end
 
-    data.each do |item|
+    delete_previous_record if data.present?
+
+    mongo_products = []
+    sql_products = []
+
+    data.each_with_index do |item, index|
       next unless valid_item?(item)
 
       shop_name = item['ismarketplace'] ? item['marketplaceseller'] : item['site']
 
-      mongo_product = MongoProduct.find_or_initialize_by(product_id: item['sku']) do |product|
-        product.country = item['country']
-        product.shop_name = shop_name
-        product.product_name = item['model']
-        product.product_category_id = item['categoryId']
-        product.price = BigDecimal(item['price'].to_s)
-        product.brand = item['brand']
-        product.url = item['url']
-      end
+      normalized_shop_name = normalize_shop_name(shop_name)
+      normalized_country = normalize_country(item['country'])
 
-      sql_product = SqlProduct.find_or_initialize_by(product_id: item['sku']) do |product|
-        product.country = item['country']
-        product.shop_name = shop_name
-        product.product_name = item['model']
-        product.product_category_id = item['categoryId']
-        product.price = BigDecimal(item['price'].to_s)
-        product.brand = item['brand']
-        product.url = item['url']
-      end
+      product_data = {
+        product_id: item['sku'],
+        country: normalized_country,
+        shop_name: normalized_shop_name,
+        product_name: item['model'],
+        product_category_id: item['categoryId'],
+        price: BigDecimal(item['price'].to_s),
+        brand: item['brand'],
+        url: item['url']
+      }
 
-      if mongo_product.changed? || sql_product.changed?
-        mongo_product.save!
-        sql_product.save!
-      end
+      mongo_products << product_data
+      sql_products << product_data
+    end
+
+    MongoProduct.collection.insert_many(mongo_products) unless mongo_products.empty?
+
+    sql_products.each_slice(1000) do |batch|
+      SqlProduct.import(batch, on_duplicate_key_ignore: true) unless batch.empty?
     end
 
     logger.info "Import completed."
@@ -50,5 +53,18 @@ class ProductImportJob < ApplicationJob
 
   def valid_item?(item)
     item['availability'].present? && item['price'].to_f > 0
+  end
+
+  def normalize_shop_name(shop_name)
+    shop_name.gsub(/BE|NL|FR/, '').strip
+  end
+
+  def normalize_country(country)
+    country.gsub(/belgium nl|belgium fr/, 'belgium')
+  end
+
+  def delete_previous_record
+    SqlProduct.delete_all
+    Mongoid::Clients.default[:mongo_products].delete_many({})
   end
 end

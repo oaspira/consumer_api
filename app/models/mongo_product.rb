@@ -1,6 +1,6 @@
 class MongoProduct
-  # include ProductValidator
   include Mongoid::Document
+  store_in collection: 'mongo_products'
 
   field :product_id, type: String
   field :product_name, type: String
