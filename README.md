@@ -56,18 +56,18 @@ Inicie o servidor Rails com o seguinte comando:
 rails s
 ```
 
-### 5. Testes
-
-O projeto utiliza RSpec para testes. Para rodar os testes, use o seguinte comando:
-
-```bash
-bundle exec rspec
-```
-
-### 6. Sidekiq
+### 5. Sidekiq
 
 Para gerenciar filas de background jobs, o projeto utiliza Sidekiq. Certifique-se de que o Redis esteja rodando localmente e inicie o Sidekiq com o seguinte comando:
 
 ```bash
 bundle exec sidekiq
+```
+
+### 6. Testes
+
+O projeto utiliza RSpec para testes. Para rodar os testes, use o seguinte comando:
+
+```bash
+bundle exec rspec
 ```
