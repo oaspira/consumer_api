@@ -24,6 +24,7 @@ Primeiro, clone o repositório do projeto:
 ```bash
 git clone https://github.com/oaspira/consumer_api.git
 cd consumer_api
+```
 
 ### 2. Instalar as dependências
 
@@ -31,6 +32,7 @@ Assumindo que você já tenha o Ruby instalado e configurado, instale as gems ne
 
 ```bash
 bundle install
+```
 
 ### 3. Configurar o banco de dados
 
@@ -44,6 +46,7 @@ Após configurar o banco de dados, crie as tabelas e rode as migrações:
 ```bash
 rails db:create
 rails db:migrate
+```
 
 ### 4. Iniciar o servidor
 
@@ -51,6 +54,7 @@ Inicie o servidor Rails com o seguinte comando:
 
 ```bash
 rails s
+```
 
 ### 5. Testes
 
@@ -58,6 +62,7 @@ O projeto utiliza RSpec para testes. Para rodar os testes, use o seguinte comand
 
 ```bash
 bundle exec rspec
+```
 
 ### 6. Sidekiq
 
@@ -65,3 +70,4 @@ Para gerenciar filas de background jobs, o projeto utiliza Sidekiq. Certifique-s
 
 ```bash
 bundle exec sidekiq
+```
