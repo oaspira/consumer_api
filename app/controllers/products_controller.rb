@@ -44,5 +44,4 @@ class ProductsController < ApplicationController
     total_mongo_count = country ? MongoProduct.where(country: country).count : MongoProduct.count
     total_sql_count + total_mongo_count
   end
-
 end
