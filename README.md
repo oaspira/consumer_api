@@ -4,7 +4,7 @@
 
 ## Descrição
 
-Este é um projeto Ruby on Rails para uma API de consumidores. Ele utiliza o Rails 7.2.1 com várias dependências importantes, como MySQL, Mongoid, Redis, e Sidekiq.
+Este é um projeto Ruby on Rails para uma API de produtos. Ele utiliza o Rails 7.2.1 com várias dependências importantes, como MySQL, Mongoid, Redis, e Sidekiq.
 
 ## Requisitos
 
