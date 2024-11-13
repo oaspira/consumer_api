@@ -4,7 +4,7 @@ gem "rails", "~> 7.2.1"
 gem "mysql2", "~> 0.5"
 gem "puma", ">= 5.0"
 
-gem 'mongoid', '~> 8.0'
+gem 'mongoid', '~> 9.0'
 gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
 gem 'sidekiq'
